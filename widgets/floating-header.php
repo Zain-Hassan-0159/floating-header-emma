@@ -239,14 +239,6 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__( 'Padding', 'textdomain' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 10,
-					'bottom' => 10,
-					'left' => 10,
-					'unit' => 'px',
-					'isLinked' => false,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .floating_header ul' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -259,14 +251,6 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__( 'Border Radius', 'textdomain' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 80,
-					'right' => 80,
-					'bottom' => 80,
-					'left' => 80,
-					'unit' => 'px',
-					'isLinked' => false,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .floating_header ul' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -311,14 +295,6 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__( 'Button Padding', 'textdomain' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 10,
-					'right' => 30,
-					'bottom' => 10,
-					'left' => 30,
-					'unit' => 'px',
-					'isLinked' => false,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .floating_header ul a.step-link' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
@@ -331,14 +307,6 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__( 'Border Radius', 'textdomain' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
-				'default' => [
-					'top' => 50,
-					'right' => 50,
-					'bottom' => 50,
-					'left' => 50,
-					'unit' => 'px',
-					'isLinked' => false,
-				],
 				'selectors' => [
 					'{{WRAPPER}} .floating_header ul a.step-link' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
