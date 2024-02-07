@@ -173,7 +173,7 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 		$repeater->add_control(
 			'show_id_or_link',
 			[
-				'label' => esc_html__( 'Show Link', 'hz-widgets' ),
+				'label' => esc_html__( 'Add ID', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => esc_html__( 'Yes', 'hz-widgets' ),
 				'label_off' => esc_html__( 'No', 'hz-widgets' ),
