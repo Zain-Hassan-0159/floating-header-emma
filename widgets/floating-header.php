@@ -171,12 +171,46 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 		);
 
 		$repeater->add_control(
+			'show_id_or_link',
+			[
+				'label' => esc_html__( 'Show Link', 'hz-widgets' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => esc_html__( 'Yes', 'hz-widgets' ),
+				'label_off' => esc_html__( 'No', 'hz-widgets' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
+
+		$repeater->add_control(
 			'target_id',
 			[
 				'label' => esc_html__( 'Target Section ID', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__( '' , 'hz-widgets' ),
 				'label_block' => true,
+				'condition' => [
+					'show_id_or_link' => 'yes',
+				],
+			]
+		);
+
+		$repeater->add_control(
+			'target_link',
+			[
+				'label' => esc_html__( 'Target Link', 'hz-widgets' ),
+				'type' => \Elementor\Controls_Manager::URL,
+				'options' => [ 'url', 'is_external', 'nofollow' ],
+				'default' => [
+					'url' => '',
+					'is_external' => true,
+					'nofollow' => true,
+					// 'custom_attributes' => '',
+				],
+				'label_block' => true,
+				'condition' => [
+					'show_id_or_link!' => 'yes',
+				],
 			]
 		);
 
@@ -236,7 +270,7 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'section_padding',
 			[
-				'label' => esc_html__( 'Padding', 'textdomain' ),
+				'label' => esc_html__( 'Padding', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'selectors' => [
@@ -248,7 +282,7 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'section_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'textdomain' ),
+				'label' => esc_html__( 'Border Radius', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'selectors' => [
@@ -292,7 +326,7 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'item_padding',
 			[
-				'label' => esc_html__( 'Button Padding', 'textdomain' ),
+				'label' => esc_html__( 'Button Padding', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'selectors' => [
@@ -304,7 +338,7 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 		$this->add_responsive_control(
 			'item_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'textdomain' ),
+				'label' => esc_html__( 'Border Radius', 'hz-widgets' ),
 				'type' => \Elementor\Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px' ],
 				'selectors' => [
@@ -416,9 +450,15 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 					$counter = 1;
 				?>
                 <ul>
-					<?php foreach($settings['float_list'] as $item) : ?>
+					<?php foreach($settings['float_list'] as $item) : 
+						
+						if ( ! empty( $item['target_link']['url'] ) ) {
+							$this->remove_render_attribute( 'target_link' );
+							$this->add_link_attributes( 'target_link', $item['target_link'] );
+						}
+						?>
                     <li>
-                        <a data-href="#<?php echo $item['target_id'] ?>" href="#<?php echo $item['target_id'] ?>"  class="<?php echo $counter !== count($settings['float_list']) ? 'step-link' : 'step-link active'; ?>">
+                        <a data-href="<?php echo  $item['show_id_or_link'] === 'yes' ? "#" . $item['target_id'] : ''; ?>" <?php echo  $item['show_id_or_link'] === 'yes' ? "href='#" . $item['target_id'] . "'" : $this->get_render_attribute_string( 'target_link' ); ?>  class="<?php echo $counter !== count($settings['float_list']) ? 'step-link' : 'step-link active'; ?>">
                             <?php echo $item['item_title'] ?>
                         </a>
                     </li>
@@ -430,7 +470,8 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
 				<?php endif; ?>
             </nav>
         </div>
-        <?php     if ( \Elementor\Plugin::$instance->editor->is_edit_mode()) : ?>
+        <?php     
+		if ( \Elementor\Plugin::$instance->editor->is_edit_mode() ) : ?>
 			<script>
 			jQuery(document).ready(function ($) {
 
@@ -455,7 +496,7 @@ class Elementor_Fhe_Widget extends \Elementor\Widget_Base {
                     $(this).addClass("active");
 				})
 			});
-		</script>
+			</script>
         <?php  endif; ?>
 		<?php
 	}
